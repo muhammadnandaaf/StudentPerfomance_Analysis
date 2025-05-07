@@ -24,7 +24,7 @@ def safe_selectbox(label, encoder, index=1):
 #============================================================================================================================
 # Categorical Column
 #============================================================================================================================
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     Marital_status = safe_selectbox('Marital_status', encoder_Marital_status, 1)
     data["Marital_status"] = [Marital_status]
@@ -32,13 +32,17 @@ with col1:
 with col2:
     Application_mode = safe_selectbox('Application_mode', encoder_Application_mode, 1)
     data["Application_mode"] = [Application_mode]
- 
+
 with col3:
+    Application_order = int(st.number_input(label='Application_order', value=5))
+    data["Application_order"] = Application_order
+ 
+with col4:
     Course = safe_selectbox('Course', encoder_Course, 5)
     data["Course"] = Course
 
 #============================================================================================================================
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     Daytime_evening_attendance = safe_selectbox('Daytime_evening_attendance', encoder_Daytime_evening_attendance, 1)
     data["Daytime_evening_attendance"] = [Daytime_evening_attendance]
@@ -46,13 +50,17 @@ with col1:
 with col2:
     Previous_qualification = safe_selectbox('Previous_qualification', encoder_Previous_qualification, 1)
     data["Previous_qualification"] = [Previous_qualification]
- 
+
 with col3:
+    Previous_qualification_grade = int(st.number_input(label='Previous_qualification_grade', value=122.0))
+    data["Previous_qualification_grade"] = Previous_qualification_grade
+ 
+with col4:
     Nacionality = safe_selectbox('Nacionality', encoder_Nacionality, 1)
     data["Nacionality"] = Nacionality
 
 #============================================================================================================================
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     Mothers_qualification = safe_selectbox('Mothers_qualification', encoder_Mothers_qualification, 1)
     data["Mothers_qualification"] = [Mothers_qualification]
@@ -65,11 +73,16 @@ with col3:
     Mothers_occupation = safe_selectbox('Mothers_occupation', encoder_Mothers_occupation, 5)
     data["Mothers_occupation"] = Mothers_occupation
 
-#============================================================================================================================
-col1, col2, col3 = st.columns(3)
-with col1: 
+with col4: 
     Fathers_occupation = safe_selectbox('Fathers_occupation', encoder_Fathers_occupation, 1)
     data["Fathers_occupation"] = [Fathers_occupation]
+
+#============================================================================================================================
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    Admission_grade = int(st.number_input(label='Admission_grade', value=124.8))
+    data["Admission_grade"] = Admission_grade
  
 with col2:
     Displaced = safe_selectbox('Displaced', encoder_Displaced, 0)
@@ -94,36 +107,22 @@ with col3:
     data["Gender"] = Gender
 
 #============================================================================================================================
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1: 
     Scholarship_holder = safe_selectbox('Scholarship_holder', encoder_Scholarship_holder, 1)
     data["Scholarship_holder"] = [Scholarship_holder]
+
+with col2:
+    Age_at_enrollment = float(st.number_input(label='Age_at_enrollment', value=19))
+    data["Age_at_enrollment"] = Age_at_enrollment
  
-with col2: 
+with col3: 
     International = safe_selectbox('International', encoder_International, 1)
     data["International"] = [International]
 
 #============================================================================================================================
-# Numerical Column
+# Numerical Semester Column
 #============================================================================================================================  
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    Application_order = int(st.number_input(label='Application_order', value=5))
-    data["Application_order"] = Application_order
- 
-with col2:
-    Previous_qualification_grade = int(st.number_input(label='Previous_qualification_grade', value=122.0))
-    data["Previous_qualification_grade"] = Previous_qualification_grade
- 
-with col3:
-    Admission_grade = int(st.number_input(label='Admission_grade', value=124.8))
-    data["Admission_grade"] = Admission_grade
- 
-with col4:
-    Age_at_enrollment = float(st.number_input(label='Age_at_enrollment', value=19))
-    data["Age_at_enrollment"] = Age_at_enrollment
- 
-#============================================================================================================================
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 with col1:
     Curricular_units_1st_sem_credited = int(st.number_input(label='Curricular_units_1st_sem_credited', value=0))
@@ -190,8 +189,11 @@ with col3:
     data["GDP"] = GDP
 
 #============================================================================================================================
+# Prediksi
+#============================================================================================================================
 if st.button('Predict'):
     new_data = data_preprocessing(data=data)
     with st.expander("View the Preprocessed Data"):
         st.dataframe(data=new_data, width=800, height=10)
     st.write("Education Status: {}".format(prediction(new_data)))
+
