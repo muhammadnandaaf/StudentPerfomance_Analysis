@@ -12,86 +12,95 @@ with col2:
 
 data = pd.DataFrame()
 
+def safe_selectbox(label, encoder, index=1):
+    """
+    Fungsi untuk menampilkan selectbox Streamlit dengan aman.
+    Jika index lebih besar dari panjang list, otomatis di-set ke 0.
+    """
+    options = encoder.classes_
+    safe_index = index if len(options) > index else 0
+    return st.selectbox(label=label, options=options, index=safe_index)
+
 #============================================================================================================================
 # Categorical Column
 #============================================================================================================================
 col1, col2, col3 = st.columns(3)
 with col1:
-    Marital_status = st.selectbox(label='Marital_status', options=encoder_Marital_status.classes_, index=1)
+    Marital_status = safe_selectbox('Marital_status', encoder_Marital_status, 1)
     data["Marital_status"] = [Marital_status]
  
 with col2:
-    Application_mode = st.selectbox(label='Application_mode', options=encoder_Application_mode.classes_, index=1)
+    Application_mode = safe_selectbox('Application_mode', encoder_Application_mode, 1)
     data["Application_mode"] = [Application_mode]
  
 with col3:
-    Course = st.selectbox(label='Course', options=encoder_Course.classes_, index=5)
+    Course = safe_selectbox('Course', encoder_Course, 5)
     data["Course"] = Course
 
 #============================================================================================================================
 col1, col2, col3 = st.columns(3)
 with col1:
-    Daytime_evening_attendance = st.selectbox(label='Daytime_evening_attendance', options=encoder_Daytime_evening_attendance.classes_, index=1)
+    Daytime_evening_attendance = safe_selectbox('Daytime_evening_attendance', encoder_Daytime_evening_attendance, 1)
     data["Daytime_evening_attendance"] = [Daytime_evening_attendance]
  
 with col2:
-    Previous_qualification = st.selectbox(label='Previous_qualification', options=encoder_Previous_qualification.classes_, index=1)
+    Previous_qualification = safe_selectbox('Previous_qualification', encoder_Previous_qualification, 1)
     data["Previous_qualification"] = [Previous_qualification]
  
 with col3:
-    Nacionality = st.selectbox(label='Nacionality', options=encoder_Nacionality.classes_, index=5)
+    Nacionality = safe_selectbox('Nacionality', encoder_Nacionality, 1)
     data["Nacionality"] = Nacionality
 
 #============================================================================================================================
 col1, col2, col3 = st.columns(3)
 with col1:
-    Mothers_qualification = st.selectbox(label='Mothers_qualification', options=encoder_Mothers_qualification.classes_, index=1)
+    Mothers_qualification = safe_selectbox('Mothers_qualification', encoder_Mothers_qualification, 1)
     data["Mothers_qualification"] = [Mothers_qualification]
  
 with col2:
-    Fathers_qualification = st.selectbox(label='Fathers_qualification', options=encoder_Fathers_qualification.classes_, index=1)
+    Fathers_qualification = safe_selectbox('Fathers_qualification', encoder_Fathers_qualification, 1)
     data["Fathers_qualification"] = [Fathers_qualification]
  
 with col3:
-    Mothers_occupation = st.selectbox(label='Mothers_occupation', options=encoder_Mothers_occupation.classes_, index=5)
+    Mothers_occupation = safe_selectbox('Mothers_occupation', encoder_Mothers_occupation, 5)
     data["Mothers_occupation"] = Mothers_occupation
 
 #============================================================================================================================
 col1, col2, col3 = st.columns(3)
-with col1:
-    Fathers_occupation = st.selectbox(label='Fathers_occupation', options=encoder_Fathers_occupation.classes_, index=1)
+with col1: 
+    Fathers_occupation = safe_selectbox('Fathers_occupation', encoder_Fathers_occupation, 1)
     data["Fathers_occupation"] = [Fathers_occupation]
  
 with col2:
-    Displaced = st.selectbox(label='Displaced', options=encoder_Displaced.classes_, index=2)
+    Displaced = safe_selectbox('Displaced', encoder_Displaced, 0)
     data["Displaced"] = [Displaced]
  
 with col3:
-    Educational_special_needs = st.selectbox(label='Educational_special_needs', options=encoder_Educational_special_needs.classes_, index=1)
+    Educational_special_needs = safe_selectbox('Educational_special_needs', encoder_Educational_special_needs, 1)
     data["Educational_special_needs"] = Educational_special_needs
 
 #============================================================================================================================
 col1, col2, col3 = st.columns(3)
-with col1:
-    Debtor = st.selectbox(label='Debtor', options=encoder_Debtor.classes_, index=1)
+with col1: 
+    Debtor = safe_selectbox('Debtor', encoder_Debtor, 1)
     data["Debtor"] = [Debtor]
  
 with col2:
-    Tuition_fees_up_to_date = st.selectbox(label='Tuition_fees_up_to_date', options=encoder_Tuition_fees_up_to_date.classes_, index=1)
+    Tuition_fees_up_to_date = safe_selectbox('Tuition_fees_up_to_date', encoder_Tuition_fees_up_to_date, 1)
     data["Tuition_fees_up_to_date"] = [Tuition_fees_up_to_date]
  
-with col3:
-    Gender = st.selectbox(label='Gender', options=encoder_Gender.classes_, index=1)
+with col3: 
+    Gender = safe_selectbox('Gender', encoder_Gender, 1)
     data["Gender"] = Gender
 
 #============================================================================================================================
 col1, col2 = st.columns(2)
-with col1:
-    Scholarship_holder = st.selectbox(label='Scholarship_holder', options=encoder_Scholarship_holder.classes_, index=1)
+with col1: 
+    Scholarship_holder = safe_selectbox('Scholarship_holder', encoder_Scholarship_holder, 1)
     data["Scholarship_holder"] = [Scholarship_holder]
  
-with col2:
-    International = st.selectbox(label='International', options=encoder_International.classes_, index=1)
+with col2: 
+    International = safe_selectbox('International', encoder_International, 1)
     data["International"] = [International]
 
 #============================================================================================================================
