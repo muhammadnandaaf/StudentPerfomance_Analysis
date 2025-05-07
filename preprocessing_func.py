@@ -80,8 +80,8 @@ def data_preprocessing(data):
     df["Gender"] = encoder_Gender.transform(data["Gender"])
     df["International"] = encoder_International.transform(data["International"])
     df["Marital_status"] = encoder_Marital_status.transform(data["Marital_status"])
-    df["Mother_occupation"] = encoder_Mothers_occupation.transform(data["Mother_occupation"])
-    df["Mother_qualification"] = encoder_Mothers_qualification.transform(data["Mother_qualification"])
+    df["Mothers_occupation"] = encoder_Mothers_occupation.transform(data["Mothers_occupation"])
+    df["Mothers_qualification"] = encoder_Mothers_qualification.transform(data["Mothers_qualification"])
 
     # Scaler
     df["Admission_grade"] = scaler_Admission_grade.transform(np.asarray(data["Admission_grade"]).reshape(-1, 1))
