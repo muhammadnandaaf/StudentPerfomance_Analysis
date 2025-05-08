@@ -191,21 +191,21 @@ with col3:
 #============================================================================================================================
 # Prediksi
 #============================================================================================================================
-new_data = data_preprocessing(data)
-expected_columns = joblib.load('model/feature_columns.joblib')
-if list(new_data.columns) != expected_columns:
-    missing_cols = set(expected_columns) - set(new_data.columns)
-    extra_cols = set(new_data.columns) - set(expected_columns)
-    st.error(f"Kolom tidak cocok!\nMissing columns: {missing_cols}\nExtra columns: {extra_cols}")
-    st.stop()
-else:
-    new_data = new_data.reindex(columns=expected_columns)
+# new_data = data_preprocessing(data)
+# expected_columns = joblib.load('model/feature_columns.joblib')
+# new_data = new_data.reindex(columns=expected_columns)
     
+# if st.button('Predict'):
+#     st.write("Columns after preprocessing:", new_data.columns)
+#     st.write("Data after preprocessing:", new_data.head())
+#     with st.expander("View the Preprocessed Data"):
+#         st.dataframe(data=new_data, width=800, height=10)
+#     st.write("Education Status: {}".format(prediction(new_data)))
+
 if st.button('Predict'):
-    st.write("Columns after preprocessing:", new_data.columns)
-    st.write("Data after preprocessing:", new_data.head())
+    new_data = data_preprocessing(data=data)
     with st.expander("View the Preprocessed Data"):
         st.dataframe(data=new_data, width=800, height=10)
-    st.write("Education Status: {}".format(prediction(new_data)))
+    st.write("Credit Scoring: {}".format(prediction(new_data)))
 
 
