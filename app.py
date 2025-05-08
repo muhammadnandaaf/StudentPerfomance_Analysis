@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 from preprocessing_func import *
-from prediction_funct import prediction
+from prediction_funct import *
 
 col1, col2 = st.columns([1, 5])
 with col1:
@@ -191,21 +191,15 @@ with col3:
 #============================================================================================================================
 # Prediksi
 #============================================================================================================================
-# new_data = data_preprocessing(data)
-# expected_columns = joblib.load('model/feature_columns.joblib')
-# new_data = new_data.reindex(columns=expected_columns)
-    
-# if st.button('Predict'):
-#     st.write("Columns after preprocessing:", new_data.columns)
-#     st.write("Data after preprocessing:", new_data.head())
-#     with st.expander("View the Preprocessed Data"):
-#         st.dataframe(data=new_data, width=800, height=10)
-#     st.write("Education Status: {}".format(prediction(new_data)))
-
 if st.button('Predict'):
     new_data = data_preprocessing(data=data)
+    new_data = new_data[model.feature_names_in_]
+    print("Kolom pada saat training:")
+    print(model.feature_names_in_)
+    print("\nKolom setelah preprocessing:")
+    print(new_data.columns)
     with st.expander("View the Preprocessed Data"):
         st.dataframe(data=new_data, width=800, height=10)
-    st.write("Credit Scoring: {}".format(prediction(new_data)))
+    st.write("Student Status: {}".format(prediction(new_data)))
 
 
