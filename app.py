@@ -77,7 +77,7 @@ with col2:
 st.markdown("### 📝 Informasi Tambahan Mahasiswa")
 col1, col2, col3 = st.columns(3)
 with col1:
-    usia_masuk = st.number_input('Usia Saat Masuk', value=19.0)
+    usia_masuk = st.number_input('Usia Saat Masuk', value=19)
     data["Age_at_enrollment"] = usia_masuk
 
     penerima_beasiswa = safe_selectbox('Penerima Beasiswa', encoder_Scholarship_holder, 1)
@@ -146,20 +146,6 @@ with col3:
 # ================================================================================================================
 # Tombol Prediksi
 # ================================================================================================================
-# if st.button('Prediksi'):
-#     st.markdown("### 🔍 Hasil Prediksi")
-#     new_data = data_preprocessing(data=data)
-#     new_data = new_data[model.feature_names_in_]
-
-#     with st.expander("Lihat Data yang Sudah Diproses"):
-#         st.dataframe(new_data)
-
-#     hasil_prediksi = prediction(new_data)
-#     if hasil_prediksi == "Enrolled":
-#         st.success("✅ Mahasiswa Diprediksi MASIH AKTIF")
-#     else:
-#         st.error("❌ Mahasiswa Diprediksi TIDAK AKTIF")
-
 if st.button('Predict'):
     st.markdown("### 🔍 Hasil Prediksi")
     new_data = data_preprocessing(data=data)
