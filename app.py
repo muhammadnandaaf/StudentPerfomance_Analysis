@@ -72,7 +72,50 @@ with col2:
     data["Fathers_occupation"] = [pekerjaan_ayah]
 
 # ================================================================================================================
-# Bagian 3: Data Akademik Semester
+# Bagian 3: Informasi Tambahan Mahasiswa
+# ================================================================================================================
+st.markdown("### 📝 Informasi Tambahan Mahasiswa")
+col1, col2, col3 = st.columns(3)
+with col1:
+    usia_masuk = st.number_input('Usia Saat Masuk', value=19.0)
+    data["Age_at_enrollment"] = usia_masuk
+
+    penerima_beasiswa = safe_selectbox('Penerima Beasiswa', encoder_Scholarship_holder, 1)
+    data["Scholarship_holder"] = [penerima_beasiswa]
+
+with col2:
+    internasional = safe_selectbox('Mahasiswa Internasional', encoder_International, 1)
+    data["International"] = [internasional]
+
+    jenis_kelamin = safe_selectbox('Jenis Kelamin', encoder_Gender, 1)
+    data["Gender"] = jenis_kelamin
+
+with col3:
+    biaya_kuliah_terbayar = safe_selectbox('Biaya Kuliah Terbayar', encoder_Tuition_fees_up_to_date, 1)
+    data["Tuition_fees_up_to_date"] = [biaya_kuliah_terbayar]
+
+    status_kreditur = safe_selectbox('Status Kreditur', encoder_Debtor, 1)
+    data["Debtor"] = [status_kreditur]
+
+# ================================================================================================================
+# Bagian 4: Kebutuhan Khusus dan Situasi Ekonomi
+# ================================================================================================================
+st.markdown("### 🏷️ Kebutuhan Khusus dan Situasi Ekonomi")
+col1, col2, col3 = st.columns(3)
+with col1:
+    kebutuhan_khusus = safe_selectbox('Kebutuhan Khusus Pendidikan', encoder_Educational_special_needs, 1)
+    data["Educational_special_needs"] = kebutuhan_khusus
+
+with col2:
+    status_terpindah = safe_selectbox('Status Terpindah (Displaced)', encoder_Displaced, 0)
+    data["Displaced"] = [status_terpindah]
+
+with col3:
+    nilai_masuk = st.number_input('Nilai Masuk (Admission Grade)', value=124.8)
+    data["Admission_grade"] = nilai_masuk
+
+# ================================================================================================================
+# Bagian 5: Data Akademik Semester
 # ================================================================================================================
 st.markdown("### 📚 Data Akademik Semester")
 for semester in ["1st", "2nd"]:
@@ -89,7 +132,7 @@ for semester in ["1st", "2nd"]:
         data[f"Curricular_units_{semester}_sem_without_evaluations"] = st.number_input(f'Tanpa Evaluasi Semester {semester}', value=0)
 
 # ================================================================================================================
-# Bagian 4: Data Ekonomi Makro
+# Bagian 6: Data Ekonomi Makro
 # ================================================================================================================
 st.markdown("### 💰 Data Ekonomi Makro")
 col1, col2, col3 = st.columns(3)
