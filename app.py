@@ -191,13 +191,17 @@ with col3:
 #============================================================================================================================
 # Prediksi
 #============================================================================================================================
+new_data = data_preprocessing(data)
 expected_columns = joblib.load('model/feature_columns.joblib')
 if list(new_data.columns) != expected_columns:
-    st.error(f"Kolom tidak cocok! Diharapkan: {expected_columns}")
+    missing_cols = set(expected_columns) - set(new_data.columns)
+    extra_cols = set(new_data.columns) - set(expected_columns)
+    st.error(f"Kolom tidak cocok!\nMissing columns: {missing_cols}\nExtra columns: {extra_cols}")
     st.stop()
+else:
+    new_data = new_data.reindex(columns=expected_columns)
     
 if st.button('Predict'):
-    new_data = new_data.reindex(columns=expected_columns, fill_value=0)
     st.write("Columns after preprocessing:", new_data.columns)
     st.write("Data after preprocessing:", new_data.head())
     with st.expander("View the Preprocessed Data"):

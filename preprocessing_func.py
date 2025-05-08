@@ -111,7 +111,7 @@ def data_preprocessing(data):
     data["Curricular_units_2nd_sem_grade"] = scaler_Curricular_units_2nd_sem_grade.transform(np.asarray(data["Curricular_units_2nd_sem_grade"]).reshape(-1, 1))[0]
     data["Curricular_units_2nd_sem_without_evaluations"] = scaler_Curricular_units_2nd_sem_without_evaluations.transform(np.asarray(data["Curricular_units_2nd_sem_without_evaluations"]).reshape(-1, 1))[0]
 
-    df[["pc1_1", "pc1_2", "pc1_3", "pc1_4"]] = pca_2.transform(data[pca_academic_semester_2])
+    df[["pc2_1", "pc2_2", "pc2_3", "pc2_4"]] = pca_2.transform(data[pca_academic_semester_2])
 
     df["Unemployment_rate"] = scaler_Unemployment_rate.transform(np.asarray(data["Unemployment_rate"]).reshape(-1, 1))
     df["Inflation_rate"] = scaler_Inflation_rate.transform(np.asarray(data["Inflation_rate"]).reshape(-1, 1))
