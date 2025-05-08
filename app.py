@@ -146,17 +146,29 @@ with col3:
 # ================================================================================================================
 # Tombol Prediksi
 # ================================================================================================================
-if st.button('Prediksi'):
+# if st.button('Prediksi'):
+#     st.markdown("### 🔍 Hasil Prediksi")
+#     new_data = data_preprocessing(data=data)
+#     new_data = new_data[model.feature_names_in_]
+
+#     with st.expander("Lihat Data yang Sudah Diproses"):
+#         st.dataframe(new_data)
+
+#     hasil_prediksi = prediction(new_data)
+#     if hasil_prediksi == "Enrolled":
+#         st.success("✅ Mahasiswa Diprediksi MASIH AKTIF")
+#     else:
+#         st.error("❌ Mahasiswa Diprediksi TIDAK AKTIF")
+
+if st.button('Predict'):
     st.markdown("### 🔍 Hasil Prediksi")
     new_data = data_preprocessing(data=data)
     new_data = new_data[model.feature_names_in_]
-
-    with st.expander("Lihat Data yang Sudah Diproses"):
-        st.dataframe(new_data)
-
-    hasil_prediksi = prediction(new_data)
-    if hasil_prediksi == "Enrolled":
-        st.success("✅ Mahasiswa Diprediksi MASIH AKTIF")
-    else:
-        st.error("❌ Mahasiswa Diprediksi TIDAK AKTIF")
+    print("Kolom pada saat training:")
+    print(model.feature_names_in_)
+    print("\nKolom setelah preprocessing:")
+    print(new_data.columns)
+    with st.expander("View the Preprocessed Data"):
+        st.dataframe(data=new_data, width=800, height=10)
+    st.write("Student Status: {}".format(prediction(new_data)))
 
