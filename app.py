@@ -4,202 +4,116 @@ import joblib
 from preprocessing_func import *
 from prediction_funct import *
 
+# --- Set Layout dan Tampilan Header ---
+st.set_page_config(layout="wide", page_title="Aplikasi Prediksi Performa Mahasiswa", page_icon="🎓")
+
 col1, col2 = st.columns([1, 5])
 with col1:
     st.image("images/student_logo.jpg", width=130)
 with col2:
-    st.header('Education Prediction App (Prototype)')
+    st.title('🎓 Aplikasi Prediksi Performa Mahasiswa')
+    st.caption("Prototype untuk memprediksi status mahasiswa berdasarkan data akademik dan demografis")
 
 data = pd.DataFrame()
 
 def safe_selectbox(label, encoder, index=1):
-    """
-    Fungsi untuk menampilkan selectbox Streamlit dengan aman.
-    Jika index lebih besar dari panjang list, otomatis di-set ke 0.
-    """
     options = encoder.classes_
     safe_index = index if len(options) > index else 0
     return st.selectbox(label=label, options=options, index=safe_index)
 
-#============================================================================================================================
-# Categorical Column
-#============================================================================================================================
+# ================================================================================================================
+# Bagian 1: Informasi Pribadi dan Akademik
+# ================================================================================================================
+st.markdown("### 📌 Informasi Pribadi dan Akademik")
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    Marital_status = safe_selectbox('Marital_status', encoder_Marital_status, 1)
-    data["Marital_status"] = [Marital_status]
- 
+    status_perkawinan = safe_selectbox('Status Perkawinan', encoder_Marital_status, 1)
+    data["Marital_status"] = [status_perkawinan]
+
+    mode_aplikasi = safe_selectbox('Mode Aplikasi', encoder_Application_mode, 1)
+    data["Application_mode"] = [mode_aplikasi]
+
+    urutan_aplikasi = st.number_input('Urutan Aplikasi', value=5)
+    data["Application_order"] = urutan_aplikasi
+
+    kursus = safe_selectbox('Program Studi', encoder_Course, 5)
+    data["Course"] = kursus
+
 with col2:
-    Application_mode = safe_selectbox('Application_mode', encoder_Application_mode, 1)
-    data["Application_mode"] = [Application_mode]
+    periode_kuliah = safe_selectbox('Periode Kuliah', encoder_Daytime_evening_attendance, 1)
+    data["Daytime_evening_attendance"] = [periode_kuliah]
 
-with col3:
-    Application_order = int(st.number_input(label='Application_order', value=5))
-    data["Application_order"] = Application_order
- 
-with col4:
-    Course = safe_selectbox('Course', encoder_Course, 5)
-    data["Course"] = Course
+    pendidikan_sebelumnya = safe_selectbox('Pendidikan Sebelumnya', encoder_Previous_qualification, 1)
+    data["Previous_qualification"] = [pendidikan_sebelumnya]
 
-#============================================================================================================================
+    nilai_pendidikan_sebelumnya = st.number_input('Nilai Pendidikan Sebelumnya', value=122.0)
+    data["Previous_qualification_grade"] = nilai_pendidikan_sebelumnya
+
+    kewarganegaraan = safe_selectbox('Kewarganegaraan', encoder_Nacionality, 1)
+    data["Nacionality"] = kewarganegaraan
+
+# ================================================================================================================
+# Bagian 2: Informasi Orang Tua
+# ================================================================================================================
+st.markdown("### 👪 Informasi Orang Tua")
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    Daytime_evening_attendance = safe_selectbox('Daytime_evening_attendance', encoder_Daytime_evening_attendance, 1)
-    data["Daytime_evening_attendance"] = [Daytime_evening_attendance]
- 
-with col2:
-    Previous_qualification = safe_selectbox('Previous_qualification', encoder_Previous_qualification, 1)
-    data["Previous_qualification"] = [Previous_qualification]
+    pendidikan_ibu = safe_selectbox('Pendidikan Ibu', encoder_Mothers_qualification, 1)
+    data["Mothers_qualification"] = [pendidikan_ibu]
 
-with col3:
-    Previous_qualification_grade = int(st.number_input(label='Previous_qualification_grade', value=122.0))
-    data["Previous_qualification_grade"] = Previous_qualification_grade
- 
-with col4:
-    Nacionality = safe_selectbox('Nacionality', encoder_Nacionality, 1)
-    data["Nacionality"] = Nacionality
-
-#============================================================================================================================
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    Mothers_qualification = safe_selectbox('Mothers_qualification', encoder_Mothers_qualification, 1)
-    data["Mothers_qualification"] = [Mothers_qualification]
- 
-with col2:
-    Fathers_qualification = safe_selectbox('Fathers_qualification', encoder_Fathers_qualification, 1)
-    data["Fathers_qualification"] = [Fathers_qualification]
- 
-with col3:
-    Mothers_occupation = safe_selectbox('Mothers_occupation', encoder_Mothers_occupation, 5)
-    data["Mothers_occupation"] = Mothers_occupation
-
-with col4: 
-    Fathers_occupation = safe_selectbox('Fathers_occupation', encoder_Fathers_occupation, 1)
-    data["Fathers_occupation"] = [Fathers_occupation]
-
-#============================================================================================================================
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    Admission_grade = int(st.number_input(label='Admission_grade', value=124.8))
-    data["Admission_grade"] = Admission_grade
- 
-with col2:
-    Displaced = safe_selectbox('Displaced', encoder_Displaced, 0)
-    data["Displaced"] = [Displaced]
- 
-with col3:
-    Educational_special_needs = safe_selectbox('Educational_special_needs', encoder_Educational_special_needs, 1)
-    data["Educational_special_needs"] = Educational_special_needs
-
-#============================================================================================================================
-col1, col2, col3 = st.columns(3)
-with col1: 
-    Debtor = safe_selectbox('Debtor', encoder_Debtor, 1)
-    data["Debtor"] = [Debtor]
- 
-with col2:
-    Tuition_fees_up_to_date = safe_selectbox('Tuition_fees_up_to_date', encoder_Tuition_fees_up_to_date, 1)
-    data["Tuition_fees_up_to_date"] = [Tuition_fees_up_to_date]
- 
-with col3: 
-    Gender = safe_selectbox('Gender', encoder_Gender, 1)
-    data["Gender"] = Gender
-
-#============================================================================================================================
-col1, col2, col3 = st.columns(3)
-with col1: 
-    Scholarship_holder = safe_selectbox('Scholarship_holder', encoder_Scholarship_holder, 1)
-    data["Scholarship_holder"] = [Scholarship_holder]
+    pendidikan_ayah = safe_selectbox('Pendidikan Ayah', encoder_Fathers_qualification, 1)
+    data["Fathers_qualification"] = [pendidikan_ayah]
 
 with col2:
-    Age_at_enrollment = float(st.number_input(label='Age_at_enrollment', value=19))
-    data["Age_at_enrollment"] = Age_at_enrollment
- 
-with col3: 
-    International = safe_selectbox('International', encoder_International, 1)
-    data["International"] = [International]
+    pekerjaan_ibu = safe_selectbox('Pekerjaan Ibu', encoder_Mothers_occupation, 5)
+    data["Mothers_occupation"] = pekerjaan_ibu
 
-#============================================================================================================================
-# Numerical Semester Column
-#============================================================================================================================  
-col1, col2, col3, col4, col5, col6 = st.columns(6)
-with col1:
-    Curricular_units_1st_sem_credited = int(st.number_input(label='Curricular_units_1st_sem_credited', value=0))
-    data["Curricular_units_1st_sem_credited"] = Curricular_units_1st_sem_credited
- 
-with col2:
-    Curricular_units_1st_sem_enrolled = int(st.number_input(label='Curricular_units_1st_sem_enrolled', value=6))
-    data["Curricular_units_1st_sem_enrolled"] = Curricular_units_1st_sem_enrolled
- 
-with col3:
-    Curricular_units_1st_sem_evaluations = int(st.number_input(label='Curricular_units_1st_sem_evaluations', value=6))
-    data["Curricular_units_1st_sem_evaluations"] = Curricular_units_1st_sem_evaluations
- 
-with col4:
-    Curricular_units_1st_sem_approved = float(st.number_input(label='Curricular_units_1st_sem_approved', value=6))
-    data["Curricular_units_1st_sem_approved"] = Curricular_units_1st_sem_approved
+    pekerjaan_ayah = safe_selectbox('Pekerjaan Ayah', encoder_Fathers_occupation, 1)
+    data["Fathers_occupation"] = [pekerjaan_ayah]
 
-with col5:
-    Curricular_units_1st_sem_grade	 = float(st.number_input(label='Curricular_units_1st_sem_grade	', value=14))
-    data["Curricular_units_1st_sem_grade"] = Curricular_units_1st_sem_grade	
+# ================================================================================================================
+# Bagian 3: Data Akademik Semester
+# ================================================================================================================
+st.markdown("### 📚 Data Akademik Semester")
+for semester in ["1st", "2nd"]:
+    st.markdown(f"#### Semester {semester}")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        data[f"Curricular_units_{semester}_sem_credited"] = st.number_input(f'SKS Diambil Semester {semester}', value=0)
+        data[f"Curricular_units_{semester}_sem_enrolled"] = st.number_input(f'Mata Kuliah Diambil Semester {semester}', value=6)
+        data[f"Curricular_units_{semester}_sem_evaluations"] = st.number_input(f'Evaluasi Semester {semester}', value=6)
 
-with col6:
-    Curricular_units_1st_sem_without_evaluations = float(st.number_input(label='Curricular_units_1st_sem_without_evaluations', value=0))
-    data["Curricular_units_1st_sem_without_evaluations"] = Curricular_units_1st_sem_without_evaluations
+    with col2:
+        data[f"Curricular_units_{semester}_sem_approved"] = st.number_input(f'SKS Lulus Semester {semester}', value=6.0)
+        data[f"Curricular_units_{semester}_sem_grade"] = st.number_input(f'IPK Semester {semester}', value=14.0)
+        data[f"Curricular_units_{semester}_sem_without_evaluations"] = st.number_input(f'Tanpa Evaluasi Semester {semester}', value=0)
 
-#============================================================================================================================
-col1, col2, col3, col4, col5, col6 = st.columns(6)
-with col1:
-    Curricular_units_2nd_sem_credited = int(st.number_input(label='Curricular_units_2nd_sem_credited', value=0))
-    data["Curricular_units_2nd_sem_credited"] = Curricular_units_2nd_sem_credited
- 
-with col2:
-    Curricular_units_2nd_sem_enrolled = int(st.number_input(label='Curricular_units_2nd_sem_enrolled', value=6))
-    data["Curricular_units_2nd_sem_enrolled"] = Curricular_units_2nd_sem_enrolled
- 
-with col3:
-    Curricular_units_2nd_sem_evaluations = int(st.number_input(label='Curricular_units_2nd_sem_evaluations', value=6))
-    data["Curricular_units_2nd_sem_evaluations"] = Curricular_units_2nd_sem_evaluations
- 
-with col4:
-    Curricular_units_2nd_sem_approved = float(st.number_input(label='Curricular_units_2nd_sem_approved', value=6))
-    data["Curricular_units_2nd_sem_approved"] = Curricular_units_2nd_sem_approved
-
-with col5:
-    Curricular_units_2nd_sem_grade	 = float(st.number_input(label='Curricular_units_2nd_sem_grade	', value=13.66))
-    data["Curricular_units_2nd_sem_grade"] = Curricular_units_2nd_sem_grade	
-
-with col6:
-    Curricular_units_2nd_sem_without_evaluations = float(st.number_input(label='Curricular_units_2nd_sem_without_evaluations', value=0))
-    data["Curricular_units_2nd_sem_without_evaluations"] = Curricular_units_2nd_sem_without_evaluations
- 
-#============================================================================================================================
+# ================================================================================================================
+# Bagian 4: Data Ekonomi Makro
+# ================================================================================================================
+st.markdown("### 💰 Data Ekonomi Makro")
 col1, col2, col3 = st.columns(3)
 with col1:
-    Unemployment_rate = float(st.number_input(label='Unemployment_rate', value=13.9))
-    data["Unemployment_rate"] = Unemployment_rate
- 
+    data["Unemployment_rate"] = st.number_input('Tingkat Pengangguran (%)', value=10.80)
 with col2:
-    Inflation_rate = float(st.number_input(label='Inflation_rate', value=-0.3))
-    data["Inflation_rate"] = Inflation_rate
- 
+    data["Inflation_rate"] = st.number_input('Tingkat Inflasi (%)', value=1.40)
 with col3:
-    GDP = float(st.number_input(label='GDP', value=0.79))
-    data["GDP"] = GDP
+    data["GDP"] = st.number_input('PDB (Produk Domestik Bruto)', value=1.74)
 
-#============================================================================================================================
-# Prediksi
-#============================================================================================================================
-if st.button('Predict'):
+# ================================================================================================================
+# Tombol Prediksi
+# ================================================================================================================
+if st.button('Prediksi'):
+    st.markdown("### 🔍 Hasil Prediksi")
     new_data = data_preprocessing(data=data)
     new_data = new_data[model.feature_names_in_]
-    print("Kolom pada saat training:")
-    print(model.feature_names_in_)
-    print("\nKolom setelah preprocessing:")
-    print(new_data.columns)
-    with st.expander("View the Preprocessed Data"):
-        st.dataframe(data=new_data, width=800, height=10)
-    st.write("Student Status: {}".format(prediction(new_data)))
 
+    with st.expander("Lihat Data yang Sudah Diproses"):
+        st.dataframe(new_data)
+
+    hasil_prediksi = prediction(new_data)
+    if hasil_prediksi == "Enrolled":
+        st.success("✅ Mahasiswa Diprediksi MASIH AKTIF")
+    else:
+        st.error("❌ Mahasiswa Diprediksi TIDAK AKTIF")
 
