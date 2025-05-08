@@ -191,9 +191,17 @@ with col3:
 #============================================================================================================================
 # Prediksi
 #============================================================================================================================
+expected_columns = joblib.load('model/feature_columns.joblib')
+if list(new_data.columns) != expected_columns:
+    st.error(f"Kolom tidak cocok! Diharapkan: {expected_columns}")
+    st.stop()
+    
 if st.button('Predict'):
-    new_data = data_preprocessing(data=data)
+    new_data = new_data.reindex(columns=expected_columns, fill_value=0)
+    st.write("Columns after preprocessing:", new_data.columns)
+    st.write("Data after preprocessing:", new_data.head())
     with st.expander("View the Preprocessed Data"):
         st.dataframe(data=new_data, width=800, height=10)
     st.write("Education Status: {}".format(prediction(new_data)))
+
 
