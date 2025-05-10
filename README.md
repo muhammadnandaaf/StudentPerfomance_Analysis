@@ -198,6 +198,8 @@ Evaluasi performa model dilakukan untuk menentukan algoritma mana yang paling ba
     - Tingkat Perguruan Ibu & Ayah berkolerasi positif dengan performa siswa, khususnya pada skor dan tingkat kelulusan.
 3. 📊 Analisis Feature Importance – Random Forest
 
+![Feature Impoertance](./images/feature_importance.png)
+
 Visualisasi ini menunjukkan fitur-fitur paling berpengaruh dalam menentukan apakah seorang mahasiswa akan lulus atau tidak, berdasarkan hasil training model Random Forest.
 
 🔝 Fitur PCA
@@ -264,8 +266,6 @@ Visualisasi ini menunjukkan fitur-fitur paling berpengaruh dalam menentukan apak
 - PCA berhasil merangkum kompleksitas dari performa akademik dan memunculkan komponennya sebagai fitur paling penting.
 - Faktor sosio-demografis seperti latar belakang keluarga, usia, dan kedisiplinan finansial mahasiswa tetap relevan namun memiliki pengaruh lebih kecil dibandingkan performa akademik.
 
-![Feature Impoertance](./images/feature_importance.png)
-
 3. Notebook juga mempersiapkan dashboard dan koneksi ke database (menggunakan SQLAlchemy dan Supabase) untuk keperluan business monitoring lebih lanjut.
 
 **🤖 Implementasi Prediksi Model**
@@ -299,6 +299,67 @@ Jaya Jaya Institut menghadapi tantangan dalam memahami faktor-faktor yang memeng
 Proyek ini menggunakan pendekatan data science berbasis Python dengan data historis siswa dari platform Dicoding. Langkah-langkah yang dilakukan meliputi eksplorasi data, analisis visualisasi interaktif, pembuatan model prediktif kelulusan, dan evaluasi performa model. Model terbaik yang diperoleh adalah Random Forest Classifier, yang menunjukkan performa akurasi dan F1 score tertinggi dibanding model lain setelah proses tuning.
 
 Faktor-faktor utama yang memengaruhi kelulusan siswa diidentifikasi sebagai berikut:
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Fitur</th>
+      <th>Kategori</th>
+      <th>Insight Singkat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pc2_1, pc2_2, pc2_3, pc2_4</td>
+      <td>Akademik Semester 2</td>
+      <td>Fitur dari semester 2 paling menentukan keberhasilan mahasiswa, mencerminkan performa di tahap akhir.</td>
+    </tr>
+    <tr>
+      <td>pc1_1, pc1_2, pc1_3, pc1_4</td>
+      <td>Akademik Semester 1</td>
+      <td>Performa awal mahasiswa di semester 1 tetap signifikan sebagai dasar identifikasi risiko awal.</td>
+    </tr>
+    <tr>
+      <td>Admission_grade</td>
+      <td>Nilai Masuk</td>
+      <td>Nilai awal saat pendaftaran memberikan indikasi kesiapan akademik mahasiswa.</td>
+    </tr>
+    <tr>
+      <td>Previous_qualification_grade</td>
+      <td>Riwayat Pendidikan</td>
+      <td>Prestasi akademik sebelumnya berkontribusi dalam menentukan keberhasilan studi.</td>
+    </tr>
+    <tr>
+      <td>Age_at_enrollment</td>
+      <td>Karakteristik Demografis</td>
+      <td>Usia saat masuk kuliah memengaruhi adaptasi dan ketahanan belajar.</td>
+    </tr>
+    <tr>
+      <td>Tuition_fees_up_to_date</td>
+      <td>Ekonomi</td>
+      <td>Ketepatan membayar biaya kuliah berhubungan dengan kelangsungan studi.</td>
+    </tr>
+    <tr>
+      <td>Course</td>
+      <td>Program Studi</td>
+      <td>Jenis program studi berperan dalam tingkat kesulitan dan retensi mahasiswa.</td>
+    </tr>
+    <tr>
+      <td>Fathers_occupation, Mothers_occupation</td>
+      <td>Latar Belakang Keluarga</td>
+      <td>Status pekerjaan orang tua mencerminkan dukungan sosial dan finansial.</td>
+    </tr>
+    <tr>
+      <td>GDP, Unemployment_rate, Inflation_rate</td>
+      <td>Faktor Ekonomi Makro</td>
+      <td>Lingkungan ekonomi nasional turut memengaruhi stabilitas studi mahasiswa.</td>
+    </tr>
+    <tr>
+      <td>Mothers_qualification, Fathers_qualification</td>
+      <td>Edukasi Orang Tua</td>
+      <td>Tingkat pendidikan orang tua mendukung motivasi dan prestasi anak.</td>
+    </tr>
+  </tbody>
+</table>
 
 Sebagai hasil akhir, data yang telah melalui proses cleaning dan transformasi disimpan dalam `cleaned_dataset.csv`. Sistem juga telah dilengkapi dengan dashboard interaktif yang memungkinkan manajemen institusi untuk memantau distribusi kelulusan, menganalisis profil siswa, dan memetakan faktor risiko akademik secara berkelanjutan.
 
