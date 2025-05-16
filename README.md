@@ -47,7 +47,27 @@ Dataset yang digunakan dalam proyek ini adalah Dataset [Siswa Jaya Jaya Institus
 **Setup Environtment:**
 
 Proyek ini memerlukan lingkungan kerja yang sederhana untuk melakukan analisis data serta membangun dashboard. Berikut ini merupakan tahapan-tahapan dalam menyiapkan environment tersebut:
-1. Setup `notebook.ipynb`
+1. Setup Environment - Anaconda
+- Membuat environment baru dengan Conda
+- Mengaktifkan environment Conda
+- Menginstal dependensi dari file
+```
+conda create --name main-ds python=3.9
+conda activate main-ds
+pip install -r requirements.txt
+```
+3. Setup Environment - Shell/Terminal
+- Instalasi Pipenv
+- Membuat dan menginstal dependensi proyek
+- Masuk ke virtual environment
+- Menginstal dependensi dari file
+```
+pip install pipenv
+pipenv install
+pipenv shell
+pip install -r requirements.txt
+```
+3. Setup `notebook.ipynb`
 - Download proyek ini terlebih dahulu.
 - Pastikan dependensi, packages, library yang dibutuhkan sudah tersedia (lihat file requirements.txt untuk melihat dependensi yang dibutuhkan).
 - Buka menggunakan VSCode Jupyter Notebook atau Google Colaboratory.
@@ -61,7 +81,7 @@ Proyek ini memerlukan lingkungan kerja yang sederhana untuk melakukan analisis d
         - Upload dan pilih file ini (notebook.ipynb)
         - Sambungkan ke runtime yang disediakan Google.
         - Kemudian jalankan seluruh sel kode.
-2. Setup Dashboard
+4. Setup Dashboard
 - Gunakan metabase dengan docker
     - Buka terminal/wsl
     - Jalankan perintah berikut:
