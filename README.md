@@ -56,7 +56,7 @@ conda create --name main-ds python=3.9
 conda activate main-ds
 pip install -r requirements.txt
 ```
-3. Setup Environment - Shell/Terminal
+2. Setup Environment - Shell/Terminal
 - Instalasi Pipenv
 - Membuat dan menginstal dependensi proyek
 - Masuk ke virtual environment
